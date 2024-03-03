@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
 @RequestMapping("/domainA")
 public class ControllerA {
@@ -29,8 +31,8 @@ public class ControllerA {
     @GetMapping("/timelimiter")
     public ResponseEntity<?> processTimelimiter(){
 
-        var response = clientApplicationB.methodCallWithTimeLimiterExample();
-
+        CompletableFuture<String> result = clientApplicationB.methodCallWithTimeLimiterExample();
+        String response = result.join();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -51,10 +53,11 @@ public class ControllerA {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/bulkhead")
     @Bulkhead(name = "applicationB")
     public ResponseEntity<?> processBulkhead(){
 
-        var response = clientApplicationB.methodCallWithCircuitBreakerExample();
+        var response = clientApplicationB.methodCallWithTimeLimiterExample();
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

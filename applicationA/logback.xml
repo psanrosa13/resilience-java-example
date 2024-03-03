@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Configurações do Console -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Definindo o Nível de Log -->
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <!-- Configurações de Log para o Spring -->
+    <logger name="org.springframework.web" level="DEBUG" />
+    <logger name="org.springframework.web.servlet" level="DEBUG" />
+    <logger name="org.springframework.web.filter" level="DEBUG" />
+    <logger name="org.springframework.web.client.RestTemplate" level="DEBUG" />
+
+</configuration>

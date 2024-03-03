@@ -20,11 +20,11 @@ resilience4j:
         minimumNumberOfCalls: 10
       applicationB:
         registerHealthIndicator: true
-        slidingWindowSize: 10
-        permittedNumberOfCallsInHalfOpenState: 10
+        slidingWindowSize: 5
+        permittedNumberOfCallsInHalfOpenState: 5
         slidingWindowType: TIME_BASED
         minimumNumberOfCalls: 4
-        waitDurationInOpenState: 20s
+        waitDurationInOpenState: 1s
         failureRateThreshold: 70
         ignoreExceptions:
           - java.lang.IllegalArgumentException
@@ -33,22 +33,22 @@ resilience4j.retry:
   instances:
     applicationB:
       maxAttempts: 3
-      waitDuration: 10s
+      waitDuration: 100ms
       ignoreExceptions:
         - java.lang.IllegalArgumentException
 
 resilience4j.ratelimiter:
   instances:
     applicationB:
-      limitForPeriod: 2
-      limitRefreshPeriod: 10s
-      timeoutDuration: 2
+      limitForPeriod: 10
+      limitRefreshPeriod: 2s
+      timeoutDuration: 1s
       registerHealthIndicator: true
 
 resilience4j.timelimiter:
   instances:
     applicationB:
-      timeoutDuration: 2s
+      timeoutDuration: 200ms
       cancelRunningFuture: true
 
 resilience4j.bulkhead:
